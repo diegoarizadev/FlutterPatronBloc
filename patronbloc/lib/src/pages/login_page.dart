@@ -152,6 +152,10 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
+          Text('Olvido la contraseña'),
+          SizedBox(
+            height: 100.0,
+          ),
         ],
       ),
     );
@@ -168,7 +172,7 @@ class LoginPage extends StatelessWidget {
             Icons.alternate_email,
             color: Colors.deepPurple,
           ),
-          hintText: 'tucorreo@corre.co', //placeHolder.
+          hintText: 'tucorreo@correo.co', //placeHolder.
           labelText: 'Correo Electrónico',
         ),
       ),
