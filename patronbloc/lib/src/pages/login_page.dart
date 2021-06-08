@@ -6,8 +6,28 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Login page'),
+      body: Stack(
+        children: [
+          _createBackground(context),
+        ],
+      ),
+    );
+  }
+
+  _createBackground(BuildContext context) {
+    final size = MediaQuery.of(context)
+        .size; //recuperar el tamaño actual de la pantalla.
+
+    return Container(
+      height: size.height * 0.4, //40% de la pantalla
+      width: double.infinity, //Todo el ancho de la pantalla.
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color>[
+            Color.fromRGBO(63, 63, 156, 1.0),
+            Color.fromRGBO(90, 70, 178, 1.0),
+          ],
+        ),
       ),
     );
   }
