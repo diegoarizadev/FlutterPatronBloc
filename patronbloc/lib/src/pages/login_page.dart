@@ -9,6 +9,7 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: [
           _createBackground(context),
+          _loginFrom(context),
         ],
       ),
     );
@@ -91,6 +92,123 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  _loginFrom(BuildContext context) {
+    final size = MediaQuery.of(context)
+        .size; //recuperar el tamaño actual de la pantalla.
+
+    return SingleChildScrollView(
+      //Es un elemento que permite hacer scroll.
+      child: Column(
+        children: [
+          SafeArea(
+            child: Container(
+              height: 180.0,
+            ),
+          ),
+          Container(
+            width: size.width * 0.85,
+            margin: EdgeInsets.symmetric(vertical: 30.0),
+            padding: EdgeInsets.symmetric(vertical: 50.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0), //Bordes redondeados
+              boxShadow: <BoxShadow>[
+                //Sombra
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 3.0,
+                  offset: Offset(0.0, 0.5), //Posición de la sombra
+                  spreadRadius: 3.0, //Fuerza de la sombra.
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Ingreso',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  //Separación del texto con el TextField
+                  height: 60.0,
+                ),
+                _crearEmail(),
+                SizedBox(
+                  //Separación del texto con el TextField
+                  height: 30.0,
+                ),
+                _crearPassword(),
+                SizedBox(
+                  //Separación del texto con el TextField
+                  height: 30.0,
+                ),
+                _crearBoton(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _crearEmail() {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(horizontal: 20.0), //Separaciones de los costados
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.alternate_email,
+            color: Colors.deepPurple,
+          ),
+          hintText: 'tucorreo@corre.co', //placeHolder.
+          labelText: 'Correo Electrónico',
+        ),
+      ),
+    );
+  }
+
+  _crearPassword() {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(horizontal: 20.0), //Separaciones de los costados
+      child: TextField(
+        obscureText: true, //Ocultar el texto escrito
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.lock_outline,
+            color: Colors.deepPurple,
+          ),
+          labelText: 'Contraseña',
+        ),
+      ),
+    );
+  }
+
+  _crearBoton() {
+    return TextButton(
+      onPressed: () {},
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 80.0,
+          vertical: 10.0,
+        ),
+        child: Text('Ingresar'),
+      ),
+      style: TextButton.styleFrom(
+          primary: Colors.deepPurple,
+          backgroundColor: Colors.deepPurple[100],
+          onSurface: Colors.grey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          )),
     );
   }
 }
