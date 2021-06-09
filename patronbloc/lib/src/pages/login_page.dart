@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:patronbloc/src/bloc/login_bloc.dart';
+import 'package:patronbloc/src/bloc/provider.dart';
 
 class LoginPage extends StatelessWidget {
   //const LoginPage({Key key}) : super(key: key);
@@ -96,6 +98,8 @@ class LoginPage extends StatelessWidget {
   }
 
   _loginFrom(BuildContext context) {
+    final bloc = ProviderInheritedWidget.of(
+        context); //invocara el metodo OF, el cual va ha buscar la instancia.
     final size = MediaQuery.of(context)
         .size; //recuperar el tamaño actual de la pantalla.
 
@@ -138,17 +142,17 @@ class LoginPage extends StatelessWidget {
                   //Separación del texto con el TextField
                   height: 60.0,
                 ),
-                _crearEmail(),
+                _crearEmail(bloc),
                 SizedBox(
                   //Separación del texto con el TextField
                   height: 30.0,
                 ),
-                _crearPassword(),
+                _crearPassword(bloc),
                 SizedBox(
                   //Separación del texto con el TextField
-                  height: 30.0,
+                  height: 60.0,
                 ),
-                _crearBoton(),
+                _crearBoton(bloc),
               ],
             ),
           ),
@@ -161,42 +165,60 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _crearEmail() {
-    return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 20.0), //Separaciones de los costados
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          icon: Icon(
-            Icons.alternate_email,
-            color: Colors.deepPurple,
+  _crearEmail(LoginBloc bloc) {
+    //Se resive como parametro la referencia del Bloc.
+
+    return StreamBuilder(
+      //Se puede escuchar los cambios sobre el campo del email y reaccionar a ellos.
+      stream: bloc.emailStream, //Stream a retornar
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: 20.0), //Separaciones de los costados
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.alternate_email,
+                color: Colors.deepPurple,
+              ),
+              hintText: 'tucorreo@correo.co', //placeHolder.
+              labelText: 'Correo Electrónico',
+              counterText: snapshot.data,
+            ),
+            onChanged: bloc
+                .changeEmail, //(value) => bloc.changeEmail(value), //Se detecto un cambio y se va ha reaccionar, se puede hacer de las dos formas que se ven en esta liena.
           ),
-          hintText: 'tucorreo@correo.co', //placeHolder.
-          labelText: 'Correo Electrónico',
-        ),
-      ),
+        );
+      },
     );
   }
 
-  _crearPassword() {
-    return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 20.0), //Separaciones de los costados
-      child: TextField(
-        obscureText: true, //Ocultar el texto escrito
-        decoration: InputDecoration(
-          icon: Icon(
-            Icons.lock_outline,
-            color: Colors.deepPurple,
+  _crearPassword(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.passwordStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: 20.0), //Separaciones de los costados
+          child: TextField(
+            obscureText: true, //Ocultar el texto escrito
+            decoration: InputDecoration(
+              icon: Icon(
+                Icons.lock_outline,
+                color: Colors.deepPurple,
+              ),
+              labelText: 'Contraseña',
+              counterText: snapshot.data,
+            ),
+            onChanged: bloc.changePassword,
           ),
-          labelText: 'Contraseña',
-        ),
-      ),
+        );
+      },
     );
   }
 
-  _crearBoton() {
+  _crearBoton(LoginBloc bloc) {
     return TextButton(
       onPressed: () {},
       child: Container(
