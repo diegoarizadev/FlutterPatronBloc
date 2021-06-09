@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget {
                 _crearPassword(bloc),
                 SizedBox(
                   //Separación del texto con el TextField
-                  height: 60.0,
+                  height: 30.0,
                 ),
                 _crearBoton(bloc),
               ],
@@ -223,22 +223,28 @@ class LoginPage extends StatelessWidget {
   }
 
   _crearBoton(LoginBloc bloc) {
-    return TextButton(
-      onPressed: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 80.0,
-          vertical: 10.0,
-        ),
-        child: Text('Ingresar'),
-      ),
-      style: TextButton.styleFrom(
-          primary: Colors.deepPurple,
-          backgroundColor: Colors.deepPurple[100],
-          onSurface: Colors.grey,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          )),
-    );
+    return StreamBuilder(
+        stream: bloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return ElevatedButton(
+            onPressed: snapshot.hasData
+                ? () {}
+                : null, //si el snapshot tiene información, se llama invoca la funcion anonima normalmente,. de lo contrario null
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 80.0,
+                vertical: 10.0,
+              ),
+              child: Text('Ingresar'),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.deepPurple,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              elevation: 0.0,
+            ),
+          );
+        });
   }
 }
