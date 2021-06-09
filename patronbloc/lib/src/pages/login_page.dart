@@ -185,6 +185,8 @@ class LoginPage extends StatelessWidget {
               hintText: 'tucorreo@correo.co', //placeHolder.
               labelText: 'Correo Electrónico',
               counterText: snapshot.data,
+              errorText:
+                  snapshot.error != null ? snapshot.error.toString() : null,
             ),
             onChanged: bloc
                 .changeEmail, //(value) => bloc.changeEmail(value), //Se detecto un cambio y se va ha reaccionar, se puede hacer de las dos formas que se ven en esta liena.
@@ -210,6 +212,8 @@ class LoginPage extends StatelessWidget {
               ),
               labelText: 'Contraseña',
               counterText: snapshot.data,
+              errorText:
+                  snapshot.error != null ? snapshot.error.toString() : null,
             ),
             onChanged: bloc.changePassword,
           ),
